@@ -16,15 +16,35 @@ add_Str_N:                        	; functions are defined as labels
 	;mov eax, 0 	UNCOMMENT WHEN CHECKING NONLETTER CHAR
 	
 	label_start:
-  		cmp byte [ecx], 0         ; compare *ecx to '\n'
+  		cmp byte [ecx], 10         ; compare *ecx to '\n'
   		je label_end               ; if equall go to label_end
   		add byte [ecx], 4
 
-  		; nonletter character check...
+      ; nonletter count
+  		cmp byte [ecx], 'A'
+      jl inc_counter
+
+      cmp byte[ ecx], 'Z'
+      jg check_less
+
+      cmp byte [ecx], 'z'
+      jg inc_counter
 
   		inc ecx
   		jmp label_start
-        label_end:
+
+  inc_counter:
+      inc byte [an]
+      inc ecx
+      jmp label_start
+
+  check_less:
+      cmp byte [ecx], 'a'
+      jl inc_counter
+      inc ecx
+      jmp label_start
+
+  label_end:
 
 ;;;;;;;;;;;;;;;; FUNCTION EFFECTIVE CODE ENDS HERE ;;;;;;;;;;;;;;;; 
          popad                    ; restore all previously used registers
