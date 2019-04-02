@@ -12,26 +12,24 @@ add_Str_N:                        	; functions are defined as labels
         ; ==== now ecx points to the string on the STACK ===
 
 ;;;;;;;;;;;;;;;; FUNCTION EFFECTIVE CODE STARTS HERE ;;;;;;;;;;;;;;;; 
-
-	;mov eax, 0 	UNCOMMENT WHEN CHECKING NONLETTER CHAR
 	
-	label_start:
-  		cmp byte [ecx], 10         ; compare *ecx to '\n'
-  		je label_end               ; if equall go to label_end
-  		add byte [ecx], 4
+  label_start:
+      cmp byte [ecx], 10         ; compare *ecx to '\n'
+      je label_end               ; if equall go to label_end
+      add byte [ecx], 4
 
       ; nonletter count
-  		cmp byte [ecx], 'A'
+      cmp byte [ecx], 'A'
       jl inc_counter
-
-      cmp byte[ ecx], 'Z'
-      jg check_less
 
       cmp byte [ecx], 'z'
       jg inc_counter
 
-  		inc ecx
-  		jmp label_start
+      cmp byte[ ecx], 'Z'
+      jg check_less
+
+      inc ecx
+      jmp label_start
 
   inc_counter:
       inc byte [an]
